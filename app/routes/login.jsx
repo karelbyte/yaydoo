@@ -33,13 +33,6 @@ export async function action({ request }) {
     );
   }
 
-  if (password.length < 8) {
-    return json(
-      { errors: { email: null, password: "Password is too short" } },
-      { status: 400 }
-    );
-  }
-
   const user = await verifyLogin(email, password);
 
   if (!user) {
@@ -65,7 +58,7 @@ export const meta = () => {
 
 export default function LoginPage() {
   const [searchParams] = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") || "/notes";
+  const redirectTo = searchParams.get("redirectTo") || "/product";
   const actionData = useActionData();
   const emailRef = React.useRef(null);
   const passwordRef = React.useRef(null);
@@ -81,6 +74,12 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-full flex-col justify-center">
       <div className="mx-auto w-full max-w-md px-8">
+      <div className="mb-14 flex flex-col items-center">
+          <img src="logo.png" className="mr-3 h-6 sm:h-9" alt="Yaydoo Logo" />
+          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+            Mega Shoes
+          </span>
+        </div>
         <Form method="post" className="space-y-6">
           <div>
             <label
@@ -176,6 +175,19 @@ export default function LoginPage() {
                 }}
               >
                 Sign up
+              </Link>
+            </div>
+            
+          </div>
+          <div className="flex items-center justify-center">
+            <div className="text-center text-sm text-gray-500">
+              <Link
+                className="text-blue-500 underline"
+                to={{
+                  pathname: "/",
+                }}
+              >
+                Back to home
               </Link>
             </div>
           </div>

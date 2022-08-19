@@ -34,6 +34,7 @@
     "@remix-run/serve": "^1.6.8",
     "@remix-run/server-runtime": "^1.6.8",
     "bcryptjs": "^2.4.3",
+    "cuid": "^2.1.8",
     "flowbite": "^1.5.2",
     "isbot": "^3.5.0",
     "react": "^18.2.0",
@@ -77,6 +78,6 @@
     "node": ">=14"
   },
   "prisma": {
-    "seed": "node --require tsconfig-paths/register prisma/seed.js"
+    "seed": "node prisma/seed.js"
   }
 }

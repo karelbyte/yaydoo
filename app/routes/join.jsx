@@ -17,6 +17,7 @@ export async function action({ request }) {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
+  const repassword = formData.get("repassword");
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
 
   if (!validateEmail(email)) {
@@ -36,6 +37,13 @@ export async function action({ request }) {
   if (password.length < 8) {
     return json(
       { errors: { email: null, password: "Password is too short" } },
+      { status: 400 }
+    );
+  }
+
+  if (password !== repassword) {
+    return json(
+      { errors: { email: null, repassword: "Password and confirm not match" } },
       { status: 400 }
     );
   }
@@ -76,6 +84,7 @@ export default function Join() {
   const actionData = useActionData();
   const emailRef = React.useRef(null);
   const passwordRef = React.useRef(null);
+  const repasswordRef = React.useRef(null);
 
   React.useEffect(() => {
     if (actionData?.errors?.email) {
@@ -88,6 +97,12 @@ export default function Join() {
   return (
     <div className="flex min-h-full flex-col justify-center">
       <div className="mx-auto w-full max-w-md px-8">
+        <div className="mb-14 flex flex-col items-center">
+          <img src="logo.png" className="mr-3 h-6 sm:h-9" alt="Yaydoo Logo" />
+          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+            Mega Shoes
+          </span>
+        </div>
         <Form method="post" className="space-y-6">
           <div>
             <label
@@ -147,6 +162,34 @@ export default function Join() {
             </div>
           </div>
 
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Confirm Password
+            </label>
+
+            <div className="mt-1">
+              <input
+                id="repassword"
+                ref={repasswordRef}
+                name="repassword"
+                type="password"
+                autoComplete="new-password"
+                aria-invalid={actionData?.errors?.repassword ? true : undefined}
+                aria-describedby="password-error"
+                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+              />
+
+              {actionData?.errors?.repassword && (
+                <div className="pt-1 text-red-700" id="password-error">
+                  {actionData.errors.repassword}
+                </div>
+              )}
+            </div>
+          </div>
+
           <input type="hidden" name="redirectTo" value={redirectTo} />
 
           <button
@@ -167,6 +210,18 @@ export default function Join() {
                 }}
               >
                 Log in
+              </Link>
+            </div>
+          </div>
+          <div className="flex items-center justify-center">
+            <div className="text-center text-sm text-gray-500">
+              <Link
+                className="text-blue-500 underline"
+                to={{
+                  pathname: "/",
+                }}
+              >
+                Back to home
               </Link>
             </div>
           </div>
