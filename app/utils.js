@@ -1,15 +1,8 @@
-import { useMatches } from "@remix-run/react";
+import { useMatches, useLocation } from "@remix-run/react";
 import { useMemo } from "react";
 
 const DEFAULT_REDIRECT = "/";
 
-/**
- * This should be used any time the redirect path is user-provided
- * (Like the query string on our login/signup pages). This avoids
- * open-redirect vulnerabilities.
- * @param {string} to The redirect destination
- * @param {string} defaultRedirect The redirect to use if the to is unsafe.
- */
 export function safeRedirect(to, defaultRedirect = DEFAULT_REDIRECT) {
   if (!to || typeof to !== "string") {
     return defaultRedirect;
@@ -22,12 +15,7 @@ export function safeRedirect(to, defaultRedirect = DEFAULT_REDIRECT) {
   return to;
 }
 
-/**
- * This base hook is used in other hooks to quickly search for specific data
- * across all loader data using useMatches.
- * @param {string} id The route id
- * @returns {JSON|undefined} The router data or undefined if not found
- */
+
 export function useMatchesData(id) {
   const matchingRoutes = useMatches();
   const route = useMemo(
@@ -62,4 +50,28 @@ export function useUser() {
 
 export function validateEmail(email) {
   return typeof email === "string" && email.length > 3 && email.includes("@");
+}
+
+
+export function getRequestParams(request, params) {
+  const url = new URL(request.url)
+  const searchParams = new URLSearchParams(url.searchParams)
+
+  Object.entries(params).forEach(([key, value]) => {
+    searchParams.set(key, String(value))
+  })
+
+  return `?${searchParams.toString()}`
+}
+
+export function useGetParams() {
+  const location = useLocation()
+  const searchParams = new URLSearchParams(location.search)
+
+  return (params) => {
+    Object.entries(params).forEach(([key, value]) => {
+      searchParams.set(key, String(value))
+    })
+    return `?${searchParams.toString()}`
+  }
 }

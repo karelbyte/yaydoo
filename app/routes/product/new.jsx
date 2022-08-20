@@ -208,9 +208,9 @@ export default function NewProductPage() {
           <div className="mt-10 flex justify-between">
             <Link
               to="/product/inventory"
-              className="block rounded py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-100  md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700"
+              className="block rounded py-2 pr-4 pl-3 underline  text-gray-700 hover:bg-gray-100  md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700"
               >
-              Back
+              Back to inventory
             </Link>
             <button
               type="submit"
@@ -224,7 +224,6 @@ export default function NewProductPage() {
 
 
       <div class="relative border-grey-700 ml-10 border border-slate-600">
-        <div class="absolute left-42 top-14"> Imagen Preview</div>
         <img id="output" alt="" />
       </div>
     </div>

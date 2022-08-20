@@ -1,5 +1,5 @@
 
-import { Form, Link, Outlet } from "@remix-run/react";
+import { Form, Link, Outlet,} from "@remix-run/react";
 import { useUser } from "~/utils";
 
 export default function ProductPage() {

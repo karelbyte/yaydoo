@@ -11,7 +11,8 @@ const ProductCard = (props) => {
   };
 
   return (
-    <div className="flex w-full flex-col bg-white shadow-md xs:mb-6 xs:items-center md:m-4 md:justify-between md:rounded-lg">
+    <div className="flex w-full flex-col bg-white shadow-md xs:mb-6 xs:items-center md:m-4 md:justify-between md:rounded-lg border border-slate-400">
+      {location.pathname === "/product/inventory" && <svg className="left-32 top-5 cursor-pointer relative w-6 h-6" fill="red" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>}
       <img className="xs:w-full md:w-56" src={props.product.img} alt="Shoe" />
       <div className="w-full px-5 pb-5">
         <div className="flex justify-between">

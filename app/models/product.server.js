@@ -16,7 +16,23 @@ const getProductListItemsForUser = async ({ userId }) => {
   });
 };
 
-const getProductListItems = async () => {
+const getProductListItems = async (term, price) => {
+  console.log('el term es:', term, term != null, 'vacio', term === '')
+  if (term) {
+    return prisma.product.findMany({
+      where: {
+        OR: [
+          {
+            name: {
+              contains: term,
+            },
+          },
+          { sku: { contains: term } },
+        ],
+      },
+    });
+  }
+
   return prisma.product.findMany();
 };
 
@@ -26,9 +42,13 @@ const createProduct = async ({ name, img, sku, quantity, price, userId }) => {
   const fileName = `/img/${cuid()}.jpg`;
   const fileNameToSave = `./public/${fileName}`;
 
-  fs.writeFile(fileNameToSave, Buffer.from(await img.arrayBuffer()), function (err) {
-    console.log(err);
-  });
+  fs.writeFile(
+    fileNameToSave,
+    Buffer.from(await img.arrayBuffer()),
+    function (err) {
+      console.log(err);
+    }
+  );
   return prisma.product.create({
     data: {
       name,
