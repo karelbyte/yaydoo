@@ -1,4 +1,4 @@
-# fly.toml file generated for yaydoo on 2022-08-19T12:53:46-05:00
+# fly.toml file generated for yaydoo on 2022-08-21T21:44:23-05:00
 
 app = "yaydoo"
 kill_signal = "SIGINT"

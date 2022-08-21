@@ -223,7 +223,7 @@ export default function NewProductPage() {
       </div>
 
 
-      <div class="relative border-grey-700 ml-10 border border-slate-600">
+      <div className="relative border-grey-700 ml-10 border border-slate-600">
         <img id="output" alt="" />
       </div>
     </div>

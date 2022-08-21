@@ -2,6 +2,12 @@ import bcrypt from "bcryptjs";
 
 import { prisma } from "~/db.server";
 
+
+export async function getUsersList() {
+  return  prisma.user.findMany();
+}
+
+
 export async function getUserById(id) {
   return prisma.user.findUnique({ where: { id } });
 }
@@ -12,11 +18,11 @@ export async function getUserByEmail(email) {
 
 export async function createUser(email, password) {
   const hashedPassword = await bcrypt.hash(password, 10);
-
+  const type = 'seller';
   return prisma.user.create({
     data: {
       email,
-      role: "seller",
+      role: type,
       password: {
         create: {
           hash: hashedPassword,

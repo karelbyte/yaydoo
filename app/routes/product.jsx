@@ -1,9 +1,17 @@
 
-import { Form, Link, Outlet,} from "@remix-run/react";
-import { useUser } from "~/utils";
+import { Form, Link, Outlet} from "@remix-run/react";
+import { useOptionalUser } from "~/utils";
+import { requireUserSession } from "~/session.server";
+
+
+export async function loader({ request }) {
+  await requireUserSession(request);
+  return null;
+}
 
 export default function ProductPage() {
-  const user = useUser();
+
+  const user = useOptionalUser();
 
   return (
     <div className="flex h-full min-h-screen flex-col">
@@ -15,7 +23,7 @@ export default function ProductPage() {
           </span>
         </div>
 
-        <div className="flex"><span className="mr-4">{user.email}</span> {user.role == 'admin' && <p> (ADMIN ACOUNT)</p> }</div>
+         <div className="flex"><span className="mr-4">{user.email}</span> {user.role == 'admin' && <p> (ADMIN ACOUNT)</p> }</div>
         <div className="flex">
           <Form action="/" method="get">
             <button

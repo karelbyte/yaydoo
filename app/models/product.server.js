@@ -2,22 +2,28 @@ import { prisma } from "~/db.server";
 import * as fs from "fs";
 import cuid from "cuid";
 
-const getProduct = async ({ id, userId }) => {
-  return prisma.product.findFirst({
-    select: { id: true, body: true, title: true },
-    where: { id, userId },
-  });
-};
-
-const getProductListItemsForUser = async ({ userId }) => {
+const getProductListItemsForUser = async ({ users }) => {
+  if (Array.isArray(users)) {
+    const uniques = users.filter((v, i, a) => a.indexOf(v) === i);
+    return prisma.product.findMany({
+      where: {
+        user: {
+          id: { in: uniques },
+        },
+      },
+    });
+  }
   return prisma.product.findMany({
-    where: { userId },
+    where: {
+      user: {
+        id: users,
+      },
+    },
     orderBy: { updatedAt: "desc" },
   });
 };
 
 const getProductListItems = async (term, price) => {
-  console.log('el term es:', term, term != null, 'vacio', term === '')
   if (term) {
     return prisma.product.findMany({
       where: {
@@ -28,7 +34,18 @@ const getProductListItems = async (term, price) => {
             },
           },
           { sku: { contains: term } },
+          { price}
         ],
+      },
+    });
+  }
+
+  if (price) {
+    return prisma.product.findMany({
+      where: {
+        price: {
+          lte: price,
+        },
       },
     });
   }
@@ -37,8 +54,6 @@ const getProductListItems = async (term, price) => {
 };
 
 const createProduct = async ({ name, img, sku, quantity, price, userId }) => {
-  console.log({ name, img, sku, quantity, price, userId });
-
   const fileName = `/img/${cuid()}.jpg`;
   const fileNameToSave = `./public/${fileName}`;
 
@@ -65,14 +80,13 @@ const createProduct = async ({ name, img, sku, quantity, price, userId }) => {
   });
 };
 
-const deleteProduct = async ({ id, userId }) => {
-  return prisma.product.deleteMany({
-    where: { id, userId },
+const deleteProduct = async ({ idToDelete }) => {
+  return prisma.product.delete({
+    where: { id: idToDelete },
   });
 };
 
 export {
-  getProduct,
   getProductListItemsForUser,
   getProductListItems,
   createProduct,

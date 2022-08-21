@@ -8,6 +8,23 @@ CREATE TABLE "User" (
     "updatedAt" DATETIME NOT NULL
 );
 
+CREATE TABLE "Cart" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "userId" TEXT,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL
+);
+
+CREATE TABLE "CartProduct" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "cartId" TEXT NOT NULL,
+    "productId" TEXT NOT NULL,
+    "quantity" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL
+);
+
+
 -- CreateTable
 CREATE TABLE "Password" (
     "hash" TEXT NOT NULL,

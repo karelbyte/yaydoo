@@ -87,3 +87,14 @@ export async function logout(request) {
     },
   });
 }
+
+export async function requireUserSession(request) {
+
+  const session = await getSession(request);
+
+  if (!session.has("userId")) {
+    throw redirect("/login");
+  }
+
+  return session;
+}

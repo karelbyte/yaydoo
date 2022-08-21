@@ -1,13 +1,8 @@
-import {
-  Form,
-  PrefetchPageLinks,
-  useLocation,
-} from "@remix-run/react";
+import { Form, PrefetchPageLinks, useLocation } from "@remix-run/react";
 import { useState } from "react";
-import { SearchParamsHiddenInputs } from "~/components/SearchParamsHiddenInputs";
 import { useGetParams } from "~/utils";
 
-export const Search = () => {
+export const Search = (props) => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchQuery = searchParams.get("search") || "";
@@ -16,20 +11,19 @@ export const Search = () => {
     return searchQuery;
   });
 
-
   const getParams = useGetParams();
 
   return (
     <Form
+      action="?"
       className="flex w-full items-center justify-center pt-20"
       onChange={(event) => {
         const formData = new FormData(event.currentTarget);
         const search = formData.get("search");
         setQuery(String(search));
       }}
+      method="get"
     >
-      <SearchParamsHiddenInputs excludeKeys={["search"]} />
-
       <div className="relative mt-10 grid xs:w-9/12 xs:grid-cols-1 sm:grid-cols-2 md:w-full md:grid-cols-3 lg:w-9/12 lg:grid-cols-4">
         <input
           name="search"

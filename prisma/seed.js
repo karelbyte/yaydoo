@@ -1,6 +1,6 @@
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
 
-const bcrypt = require("bcryptjs");
+import { hash as _hash } from "bcryptjs";
 
 const prisma = new PrismaClient();
 
@@ -8,7 +8,7 @@ async function seed() {
   const email = "admin@yaydoo.com";
   await prisma.user.delete({ where: { email } }).catch(() => {});
 
-  const hashedPassword = await bcrypt.hash("1234", 10);
+  const hashedPassword = await _hash("1234", 10);
 
   const user = await prisma.user.create({
     data: {
@@ -21,8 +21,6 @@ async function seed() {
       },
     },
   });
-
-
 
   const products = [
     {
@@ -82,7 +80,6 @@ async function seed() {
   ];
 
   
-
   products.forEach(async (product) => {
     await prisma.product.create({
       data: product
