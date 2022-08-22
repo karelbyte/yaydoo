@@ -1,6 +1,6 @@
 ## Solución del test para YayDoo
 
-El ejercicio lo desarrollé en [Remix](https://remix.run/), es un framework React SSR que por estos días me a gustando mucho, recomendado!, me tome algunas licencias **"artísticas"** en cuanto al diseño de proyecto-test, espero que no les moleste, así fue más divertido para mí, igual creo que los criterios de aceptación están bastante completos aunque por tiempo no pude hacer todo igual, pues todas las dudas, sugerencias o *porque llo programe así* estoy a sus órdenes.
+El ejercicio lo desarrollé en [Remix](https://remix.run/), es un framework React SSR que por estos días me a gustando mucho, recomendado!, me tome algunas licencias **"artísticas"** en cuanto al diseño de proyecto-test, espero que no les moleste, así fue más divertido para mí, igual creo que los criterios de aceptación están bastante completos aunque por tiempo no pude hacer todo igual, pues todas las dudas, sugerencias o *porque lo programe así* estoy a sus órdenes.
 
 Mis datos
 > correo: karelpdiaz@hotmail.com <br>
